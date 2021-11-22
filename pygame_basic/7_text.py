@@ -57,7 +57,7 @@ while running:
     # 10fps : 1초동안 10번 동작 -> 1번에 몇 만큼 이동? 10만큼 이동 10 * 10 = 100
     # 20fps : 1초동안 20번 동작 -> 1번에 5만큼 이동 5 * 20 = 100
 
-    print("fps : "+str(clock.get_fps()))
+    # print("fps : "+str(clock.get_fps()))
     for event in pygame.event.get(): #어떤 이벤트가 발생하였는가?
         if event.type == pygame.QUIT: #창이 닫히는 이벤트(X누르는거)가 발생하였는가?
             running = False #게임이 진행중이 아님
@@ -121,6 +121,8 @@ while running:
     # 경과시간(ms)을 1000으로 나누어서 초(s)단위로 표시시
 
 
+
+
     timer = game_font.render(str(int(total_time - elapsed_time)), True, (255,255,255))
     #출력할 글자, 무조건 True, 글자 색상
     screen.blit(timer, (10,10))
@@ -131,6 +133,9 @@ while running:
         running = False
 
     pygame.display.update() #게임화면 다시그리기 -> 안그리면 배경 적용 x
+
+#잠시대기
+pygame.time.delay(2000) #2초 정도 대기 (ms)
 
 # pygame 종
 pygame.quit()
