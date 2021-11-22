@@ -1,3 +1,4 @@
+import random
 import pygame
 #############################################
 #기본초기화(반드시 해야하는 것들)
@@ -26,11 +27,21 @@ character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
 character_x_pos = (screen_width/2) - (character_width/2) #화면중앙
-character_y_pos = screen_height - character_height #화면중앙
+character_y_pos = screen_height - character_height # 화면 최하단
 
 #이동 위치
 too_x = 0
 character_speed = 35
+
+#눈 만들기
+snow = pygame.image.load("D:/game/img/snow.png")
+snow_size = snow.get_rect().size
+snow_width = snow_size[0]
+snow_height = snow_size[1]
+snow_x_pos = random.randint(0,(screen_width-snow_width)) #0~스크린크기-눈의 가로중 랜덤
+snow_y_pos = 0
+snow_speed = 10
+
 
 running = True #게임이 진행중인가?
 while running:
@@ -56,11 +67,30 @@ while running:
     elif character_x_pos > screen_width - character_width: #화면 왼쪽으로 나갈때
         character_x_pos = screen_width - character_width
 
+    snow_y_pos += snow_speed #떨어지는 효과
+
+    if snow_y_pos > screen_height: #화면에서 밑으로 떨어졌을때
+        snow_y_pos = 0
+        snow_x_pos = random.randint(0, (screen_width-snow_width))
+
     #4.충돌처리
+    character_rect = character.get_rect()
+    character_rect.left = character_x_pos
+    character_rect.top = character_y_pos
+
+    snow_rect = snow.get_rect()
+    snow_rect.left = snow_x_pos
+    snow_rect.top = snow_y_pos
+
+    if character_rect.colliderect(snow_rect): #충돌했는지
+        print("충돌")
+        running = False
 
     #5.화면 그리기기
     screen.blit(background, (0,0))
     screen.blit(character,(character_x_pos,character_y_pos))
+    screen.blit(snow, (snow_x_pos, snow_y_pos))
+
     pygame.display.update() #게임화면 다시그리기 -> 안그리면 배경 적용 x
 
 # pygame 종료
