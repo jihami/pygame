@@ -125,6 +125,11 @@ while running:
     #출력할 글자, 무조건 True, 글자 색상
     screen.blit(timer, (10,10))
 
+    #만약 시간이 0 이하이면 게임 종료
+    if total_time - elapsed_time <= 0:
+        print("타임아웃")
+        running = False
+
     pygame.display.update() #게임화면 다시그리기 -> 안그리면 배경 적용 x
 
 # pygame 종
